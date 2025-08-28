@@ -1,7 +1,7 @@
-#include "AStarShow/AStarShow.h"
+#include "System/System.h"
 #include "Engine.h"
 int main()
 {
-	AStarShow aStarShow;
-	aStarShow.Run();
+	System aStarsSystem;
+	aStarsSystem.Run();
 }
