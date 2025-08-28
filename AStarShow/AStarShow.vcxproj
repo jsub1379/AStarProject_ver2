@@ -147,6 +147,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\Cursor.cpp" />
     <ClCompile Include="Actor\Ground.cpp" />
     <ClCompile Include="Actor\Obstacle.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
@@ -156,9 +157,11 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\Cursor.h" />
     <ClInclude Include="Actor\Ground.h" />
     <ClInclude Include="Actor\Obstacle.h" />
     <ClInclude Include="Actor\Wall.h" />
+    <ClInclude Include="Interface\ICanPlayerMove.h" />
     <ClInclude Include="Level\AStarShow.h" />
     <ClInclude Include="System\System.h" />
     <ClInclude Include="Level\MenuLevel.h" />

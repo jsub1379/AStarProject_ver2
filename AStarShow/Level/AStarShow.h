@@ -1,17 +1,17 @@
 #pragma once
 #include "Level/Level.h"
-#include "Math/Vector2.h"
+#include "Interface/ICanPlayerMove.h"
 
-class AStarShow : public Level
+class AStarShow : public Level, public ICanPlayerMove
 {
 	RTTI_DECLARATIONS(AStarShow, Level)
 public:
 	AStarShow();
 
 	// Inherited via ICanPlayerMove.
-	bool CanPlayerMove(
+	virtual bool CanPlayerMove(
 		const Vector2& playerPosition,
-		const Vector2& newPosition);
+		const Vector2& newPosition) override;
 
 	// 가능은 함.
 private:
@@ -21,6 +21,8 @@ private:
 
 	// 맵 파일을 읽어서 게임 객체 생성하는 함수.
 	void ReadMapFile(const char* filename);
+
+	
 
 	// 게임 클리어 확인하는 함수.
 	bool CheckGameClear();
