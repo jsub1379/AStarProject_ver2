@@ -33,10 +33,16 @@
     <ClCompile Include="System\System.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Level\AStarShow.cpp">
+    <ClCompile Include="Level\AStarShowLevel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Actor\Cursor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Start.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\Goal.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,13 +62,19 @@
     <ClInclude Include="System\System.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Level\AStarShow.h">
+    <ClInclude Include="Level\AStarShowLevel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Actor\Cursor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Interface\ICanPlayerMove.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Start.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Goal.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

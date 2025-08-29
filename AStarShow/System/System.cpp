@@ -1,6 +1,6 @@
 #include "System.h"
 #include "Level/MenuLevel.h"
-#include "Level/AStarShow.h"
+#include "Level/AStarShowLevel.h"
 
 System* System::instance = nullptr;
 
@@ -9,7 +9,7 @@ System::System()
 	instance = this;
 
 	// 메인 레벨 추가.
-	AddLevel(new AStarShow());
+	AddLevel(new AStarShowLevel());
 
 	// 메뉴 레벨 생성.
 	menuLevel = new MenuLevel();

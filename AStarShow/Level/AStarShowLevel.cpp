@@ -1,4 +1,4 @@
-#include "AStarShow.h"
+#include "AStarShowLevel.h"
 
 #include "Actor/Wall.h"
 #include "Actor/Obstacle.h"
@@ -7,17 +7,17 @@
 
 #include <iostream>
 
-AStarShow::AStarShow()
+AStarShowLevel::AStarShowLevel()
 {
 	ReadMapFile("../Assets/map_test.txt");
 }
 
-void AStarShow::Render()
+void AStarShowLevel::Render()
 {
 	super::Render();
 
 }
-void AStarShow::ReadMapFile(const char* filename)
+void AStarShowLevel::ReadMapFile(const char* filename)
 {
 
 	FILE* file = nullptr;
@@ -70,7 +70,8 @@ void AStarShow::ReadMapFile(const char* filename)
 
 }
 
-bool AStarShow::CanPlayerMove(const Vector2& playerPosition, const Vector2& newPosition)
+
+bool AStarShowLevel::CanPlayerMove(const Vector2& playerPosition, const Vector2& newPosition)
 {
 	bool blocked = false;
 	// 플레이어가 이동하려는 위치에 박스가 없는 경우.
@@ -89,3 +90,4 @@ bool AStarShow::CanPlayerMove(const Vector2& playerPosition, const Vector2& newP
 	if (blocked) return false;
 	return true;
 }
+

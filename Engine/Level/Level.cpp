@@ -10,14 +10,6 @@ Level::~Level()
 	// 메모리 해제.
 	for (Actor* actor : actors)
 	{
-		// null 확인 후 액터 제거.
-		//if (actor)
-		//{
-		//	// 삭제 및 메모리 정리.
-			delete actor;
-		//	actor = nullptr;
-		//}
-
 		SafeDelete(actor);
 	}
 

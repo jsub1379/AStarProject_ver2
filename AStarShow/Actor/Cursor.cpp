@@ -1,9 +1,13 @@
 #include "Cursor.h"
 #include "Input.h"
 #include "System/System.h"
-#include "Actor/Wall.h"
-#include "INterface/ICanPlayerMove.h"
+#include "Interface/ICanPlayerMove.h"
 #include "Level/level.h"
+
+#include "Actor/Wall.h"
+#include "Actor/Obstacle.h"
+#include "Actor/Start.h"
+#include "Actor/Goal.h"
 
 #include <vector>
 #include <Windows.h>
@@ -13,7 +17,7 @@ Cursor::Cursor(const Vector2& position)
 	: Actor('+', Color::White, position)
 {
 	// 그릴 때 사용할 정렬 순서 설정.
-	SetSortingOrder(1);
+	SetSortingOrder(5);
 }
 
 void Cursor::BeginPlay()
@@ -23,13 +27,15 @@ void Cursor::BeginPlay()
 	// 인터페이스 얻어오기.
 	if (GetOwner())
 	{
-		canPlayerMoveInterface
-			= dynamic_cast<ICanPlayerMove*>(GetOwner());
+		canPlayerMoveInterface = dynamic_cast<ICanPlayerMove*>(GetOwner());
+
 
 		if (!canPlayerMoveInterface)
 		{
 			std::cout << "Can not cast owner level to ICanPlayerMove.\n";
 		}
+
+
 	}
 }
 
@@ -98,5 +104,25 @@ void Cursor::Tick(float deltaTime)
 		}
 	}
 
+	if (Input::Get().GetKeyDown('W'))
+	{
+		Vector2 position = Position();
+		owner->AddActor(new Obstacle(position));
+		//todo: 메모리 삭제
+	}
+
+	if (Input::Get().GetKeyDown('S'))
+	{
+		Vector2 position = Position();
+		owner->AddActor(new Start(position));
+		//todo: 메모리 삭제
+	}
+
+	if (Input::Get().GetKeyDown('G'))
+	{
+		Vector2 position = Position();
+		owner->AddActor(new Goal(position));
+		//todo: 메모리 삭제
+	}
 }
 

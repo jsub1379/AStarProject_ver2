@@ -148,21 +148,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Cursor.cpp" />
+    <ClCompile Include="Actor\Goal.cpp" />
     <ClCompile Include="Actor\Ground.cpp" />
     <ClCompile Include="Actor\Obstacle.cpp" />
+    <ClCompile Include="Actor\Start.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
-    <ClCompile Include="Level\AStarShow.cpp" />
+    <ClCompile Include="Level\AStarShowLevel.cpp" />
     <ClCompile Include="System\System.cpp" />
     <ClCompile Include="Level\MenuLevel.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Cursor.h" />
+    <ClInclude Include="Actor\Goal.h" />
     <ClInclude Include="Actor\Ground.h" />
     <ClInclude Include="Actor\Obstacle.h" />
+    <ClInclude Include="Actor\Start.h" />
     <ClInclude Include="Actor\Wall.h" />
     <ClInclude Include="Interface\ICanPlayerMove.h" />
-    <ClInclude Include="Level\AStarShow.h" />
+    <ClInclude Include="Level\AStarShowLevel.h" />
     <ClInclude Include="System\System.h" />
     <ClInclude Include="Level\MenuLevel.h" />
   </ItemGroup>

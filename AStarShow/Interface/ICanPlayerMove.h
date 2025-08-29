@@ -6,8 +6,5 @@
 class ICanPlayerMove
 {
 public:
-	virtual bool CanPlayerMove(
-		const Vector2& playerPosition,
-		const Vector2& newPosition
-	) = 0;
+	virtual bool CanPlayerMove(const Vector2& playerPosition, const Vector2& newPosition) = 0;
 };
