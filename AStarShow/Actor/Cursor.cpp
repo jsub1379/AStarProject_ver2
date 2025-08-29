@@ -4,6 +4,7 @@
 #include "Interface/ICanPlayerMove.h"
 #include "Level/level.h"
 
+
 #include "Actor/Wall.h"
 #include "Actor/Obstacle.h"
 #include "Actor/Start.h"
@@ -123,6 +124,11 @@ void Cursor::Tick(float deltaTime)
 		Vector2 position = Position();
 		owner->AddActor(new Goal(position));
 		//todo: 메모리 삭제
+	}
+
+	if (Input::Get().GetKeyDown(VK_RETURN))
+	{
+
 	}
 }
 

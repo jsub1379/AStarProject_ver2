@@ -153,6 +153,7 @@
     <ClCompile Include="Actor\Obstacle.cpp" />
     <ClCompile Include="Actor\Start.cpp" />
     <ClCompile Include="Actor\Wall.cpp" />
+    <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="Level\AStarShowLevel.cpp" />
     <ClCompile Include="System\System.cpp" />
     <ClCompile Include="Level\MenuLevel.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Actor\Obstacle.h" />
     <ClInclude Include="Actor\Start.h" />
     <ClInclude Include="Actor\Wall.h" />
+    <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="Interface\ICanPlayerMove.h" />
     <ClInclude Include="Level\AStarShowLevel.h" />
     <ClInclude Include="System\System.h" />

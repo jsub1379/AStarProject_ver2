@@ -1,4 +1,6 @@
 #include "AStarShowLevel.h"
+#include "AStar/AStar.h"
+#include "Input.h"
 
 #include "Actor/Wall.h"
 #include "Actor/Obstacle.h"
@@ -6,6 +8,7 @@
 #include "Actor/Cursor.h"
 
 #include <iostream>
+#include <Windows.h>
 
 AStarShowLevel::AStarShowLevel()
 {
@@ -15,6 +18,10 @@ AStarShowLevel::AStarShowLevel()
 void AStarShowLevel::Render()
 {
 	super::Render();
+	//if (Input::Get().GetKeyDown(VK_RETURN))
+	//{
+	//	aStar.MakeGrid();
+	//}
 
 }
 void AStarShowLevel::ReadMapFile(const char* filename)
@@ -30,6 +37,7 @@ void AStarShowLevel::ReadMapFile(const char* filename)
 
 	Vector2 position;
 
+
 	char buffer[256] = { };
 	while (!feof(file))
 	{
@@ -38,7 +46,9 @@ void AStarShowLevel::ReadMapFile(const char* filename)
 
 		for (int ix = 0; ix < lineLength; ++ix)
 		{
+
 			char mapCharacter = buffer[ix];
+
 			switch (mapCharacter)
 			{
 			case '@':
@@ -64,11 +74,11 @@ void AStarShowLevel::ReadMapFile(const char* filename)
 	position.x = 3;
 	position.y = 3;
 	AddActor(new Cursor(position));
-	   
 
 	fclose(file);
 
 }
+
 
 
 bool AStarShowLevel::CanPlayerMove(const Vector2& playerPosition, const Vector2& newPosition)

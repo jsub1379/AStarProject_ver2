@@ -1,6 +1,7 @@
 #pragma once
 #include "Level/Level.h"
 #include "Interface/ICanPlayerMove.h"
+#include "AStar/Astar.h"
 
 class AStarShowLevel : public Level, public ICanPlayerMove
 {
@@ -31,4 +32,6 @@ private:
 
 	// 게임 클리어 여부 확인 변수.
 	bool isGameClear = false;
+
+	AStar aStar;
 };
