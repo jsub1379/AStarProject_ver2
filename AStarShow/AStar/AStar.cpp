@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <Utils/Utils.h>
+#include <Actor/Actor.h>
 AStar::AStar()
 {
 }
@@ -327,9 +328,21 @@ void AStar::ShowGrid()
 	{
 		for (int x = 0; x < width; ++x)
 		{
-			std::cout << grid[x][y];
+			char c = grid[x][y];
+
+			if (c == '+')
+				Utils::SetConsoleTextColor(FOREGROUND_GREEN);   // 방문 후보
+			else if (c == '*')
+				Utils::SetConsoleTextColor(FOREGROUND_RED);     // 최종 경로
+			else
+				Utils::SetConsoleTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);   // 나머지 전부 흰색
+
+			std::cout << c;
 		}
 		std::cout << "\n";
+
+		// 출력 후 기본색으로 되돌림
+		Utils::SetConsoleTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 	}
 }
 
