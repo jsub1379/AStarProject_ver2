@@ -3,7 +3,7 @@
 #include "System/System.h"
 #include "Interface/ICanPlayerMove.h"
 #include "Level/level.h"
-
+#include "Level/AStarShowLevel.h"
 
 #include "Actor/Wall.h"
 #include "Actor/Obstacle.h"
@@ -126,9 +126,19 @@ void Cursor::Tick(float deltaTime)
 		//todo: 메모리 삭제
 	}
 
+
 	if (Input::Get().GetKeyDown(VK_RETURN))
 	{
-
+		if (auto* level = owner->As<AStarShowLevel>())
+		{
+			auto grid = level->SnapshotGrid();
+			if (!grid.empty())
+			{
+				aStar.MakeGrid(grid);  
+				aStar.FindPath();      
+				aStar.Path();
+			}
+		}
 	}
 }
 

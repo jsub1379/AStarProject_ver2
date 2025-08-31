@@ -1,7 +1,7 @@
 #include "AStar.h"
 #include <iostream>
-
-
+#include <Windows.h>
+#include <Utils/Utils.h>
 AStar::AStar()
 {
 }
@@ -11,10 +11,30 @@ AStar::~AStar()
 
 }
 
-void AStar::MakeGrid(char data)
+void AStar::MakeGrid(const std::vector<std::vector<char>>& data)
 {
-	grid.emplace_back(data);
+	system("cls");
+	COORD coord;
+	coord.X = 0;
+	coord.Y = 0;
+	Utils::SetConsolePosition(coord);
+
+	grid = data; // 깊은 복사
+
+	// ===== 테스트 출력 =====
+	//std::cout << "=== SnapshotGrid Result ===" << std::endl;
+	for (int y = 0; y < (int)grid[0].size(); ++y)  // y: 세로(height)
+	{
+		for (int x = 0; x < (int)grid.size(); ++x) // x: 가로(width)
+		{
+			std::cout << grid[x][y];
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "===========================" << std::endl;
 }
+
+
 void AStar::FindPath()
 {
 	Node startNode;
@@ -65,6 +85,9 @@ void AStar::FindPath()
 		if (currentNode == goalNode)
 		{
 			//todo: 경로 반환
+
+			ConstructPath(currentNode,startNode);
+			return;
 		}
 
 		//openlist 에서 삭제
@@ -101,7 +124,7 @@ void AStar::FindPath()
 			int newX = currentNode.x + direction.x;
 			int newY = currentNode.y + direction.y;
 
-			if (IsInRange(newX, newY, grid))
+			if (!IsInRange(newX, newY, grid))
 			{
 				continue;
 			}
@@ -121,28 +144,39 @@ void AStar::FindPath()
 			// 방문을 위한 노드 생성.
 			// 비용도 계산.
 			Node neighborNode;
+			neighborNode.x = newX;
+			neighborNode.y = newY;
+			neighborNode.parent = Vector2(currentNode.x, currentNode.y);  // 부모 좌표 저장
+
 			neighborNode.gCost = currentNode.gCost + direction.cost;
-			// 휴리스틱 비용 계산 함수 호출.
 			neighborNode.hCost = CalculateHeuristic(neighborNode, goalNode);
 			neighborNode.fCost = neighborNode.gCost + neighborNode.hCost;
 
+
 			// 이웃 노드가 열린 리스트에 있는지 확인.
 			Node openListNode;
-			for (Node node : openList)
+			bool inOpen = false;
+			for (Node& node : openList)
 			{
-				if (node == neighborNode)
+				if (node == neighborNode)  // Vector2::operator==로 x,y 좌표 비교
 				{
-					openListNode = node;
+					inOpen = true;
+					if (neighborNode.gCost < node.gCost)
+					{
+						node.gCost = neighborNode.gCost;
+						node.hCost = neighborNode.hCost;
+						node.fCost = neighborNode.fCost;
+						node.parent.x = neighborNode.parent.x;
+						node.parent.y = neighborNode.parent.y;
+					}
 					break;
 				}
 			}
-
-			// 노드가 목록에 없거나 비용이 싸면, 새 노드 추가.
-			if (openListNode.gCost > neighborNode.gCost
-				|| openListNode.fCost > neighborNode.fCost)
+			if (!inOpen)
 			{
 				openList.emplace_back(neighborNode);
 			}
+
 
 		}
 
@@ -153,15 +187,12 @@ void AStar::FindPath()
 
 bool AStar::IsInRange(int x, int y, const std::vector<std::vector<char>>& grid)
 {
-	// x, y 범위가 벗어나면 false.
-	if (x < 0 || y < 0 || x >= (int)grid[0].size() || y >= (int)grid.size())
-	{
-		return false;
-	}
-
-	// 벗어나지 않았으면 true.
+	if (x < 0 || y < 0) return false;
+	if (x >= static_cast<int>(grid.size()))     return false;   // x: width(바깥 벡터)
+	if (y >= static_cast<int>(grid[0].size()))  return false;   // y: height(안쪽 벡터)
 	return true;
 }
+
 
 bool AStar::HasVisited(int x, int y, float gCost)
 {
@@ -212,4 +243,58 @@ float AStar::CalculateHeuristic(Node currentNode, Node goalNode)
 
 	// 대각선 길이 구하기. 
 	return (float)std::sqrt(diff.x * diff.x + diff.y * diff.y);
+}
+
+void AStar::ConstructPath(Node goalNode, Node startNode)
+{
+	path.clear();
+
+	Node currentNode = goalNode;
+
+	// start 포함 여부는 필요에 따라
+	while (!(currentNode.x == startNode.x && currentNode.y == startNode.y))
+	{
+		path.emplace_back(currentNode);
+
+		// 부모 좌표로 '점프'할 때, 좌표만 바꾸지 말고
+		// closedList에서 그 좌표를 가진 '노드'를 찾아서 교체해야
+		// 다음 루프에서 parent 사슬을 계속 탈 수 있음.
+		bool foundParent = false;
+		for (const Node& n : closedList)
+		{
+			if (n.x == currentNode.parent.x && n.y == currentNode.parent.y)
+			{
+				currentNode = n;     // 전체 노드 교체(부모 정보까지 함께 이동)
+				foundParent = true;
+				break;
+			}
+		}
+		if (!foundParent)
+		{
+			// 안전장치: 부모를 못 찾으면 중단
+			break;
+		}
+	}
+
+	// 시작 노드를 경로에 포함하고 싶다면 추가
+	path.emplace_back(startNode);
+
+	std::reverse(path.begin(), path.end());
+}
+
+
+
+void AStar::Path()
+{
+	if (!path.empty())
+	{
+		std::cout << "경로를 찾았습니다. 최단 경로:\n";
+		for (Node node : path)
+		{
+			std::cout
+				<< "(" << node.x
+				<< ", " << node.y << ") -> ";
+		}
+		std::cout << "목표 도착\n";
+	}
 }

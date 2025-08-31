@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Actor/Actor.h"
-
+#include "AStar/AStar.h"
 
 class Cursor : public Actor
 {
@@ -16,5 +16,5 @@ public:
 private:
     // 인터페이스 참조 변수.
     class ICanPlayerMove* canPlayerMoveInterface = nullptr;
-
+    AStar aStar;
 };

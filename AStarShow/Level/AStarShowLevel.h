@@ -2,16 +2,19 @@
 #include "Level/Level.h"
 #include "Interface/ICanPlayerMove.h"
 #include "AStar/Astar.h"
+#include <vector>
 
 class AStarShowLevel : public Level, public ICanPlayerMove
 {
 	RTTI_DECLARATIONS(AStarShowLevel, Level)
+
 public:
 	AStarShowLevel();
 
 	// Inherited via ICanPlayerMove.
 	virtual bool CanPlayerMove(const Vector2& playerPosition, const Vector2& newPosition) override;
 
+	std::vector<std::vector<char>> SnapshotGrid();
 
 	// 가능은 함.
 private:
@@ -26,6 +29,8 @@ private:
 	// 게임 클리어 확인하는 함수.
 	bool CheckGameClear();
 
+
+
 private:
 	// 게임 클리어를 위한 점수.
 	int targetScore = 0;
@@ -33,5 +38,8 @@ private:
 	// 게임 클리어 여부 확인 변수.
 	bool isGameClear = false;
 
-	AStar aStar;
+	int mapWidth = 0;
+	int mapHeight = 0;
+
+
 };
