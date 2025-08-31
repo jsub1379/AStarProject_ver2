@@ -87,6 +87,7 @@ void AStar::FindPath()
 			//todo: 경로 반환
 
 			ConstructPath(currentNode,startNode);
+
 			return;
 		}
 
@@ -141,6 +142,19 @@ void AStar::FindPath()
 				continue;
 			}
 
+			if (visualizationEnabled)
+			{
+				if (grid[newX][newY] != '@' && grid[newX][newY] != '#' &&
+					grid[newX][newY] != 'S' && grid[newX][newY] != 'G')
+				{
+					grid[newX][newY] = '+';
+				}
+
+				ShowGrid();
+				Sleep(visualizationVisitDelayMs);
+			}
+
+
 			// 방문을 위한 노드 생성.
 			// 비용도 계산.
 			Node neighborNode;
@@ -155,7 +169,7 @@ void AStar::FindPath()
 
 			// 이웃 노드가 열린 리스트에 있는지 확인.
 			Node openListNode;
-			bool inOpen = false;
+			bool inOpen = false;	
 			for (Node& node : openList)
 			{
 				if (node == neighborNode)  // Vector2::operator==로 x,y 좌표 비교
@@ -298,3 +312,45 @@ void AStar::Path()
 		std::cout << "목표 도착\n";
 	}
 }
+
+void AStar::ShowGrid()
+{
+	if (!visualizationEnabled) return;
+
+	COORD coord{ 0, 0 };
+	Utils::SetConsolePosition(coord);
+
+	const int width = static_cast<int>(grid.size());
+	const int height = width > 0 ? static_cast<int>(grid[0].size()) : 0;
+
+	for (int y = 0; y < height; ++y)
+	{
+		for (int x = 0; x < width; ++x)
+		{
+			std::cout << grid[x][y];
+		}
+		std::cout << "\n";
+	}
+}
+
+
+void AStar::ShowPath()
+{
+	if (!visualizationEnabled) return;
+
+	for (const auto& p : path)
+	{
+		const int x = static_cast<int>(p.x);
+		const int y = static_cast<int>(p.y);
+		if (x < 0 || y < 0) continue;
+		if (x >= static_cast<int>(grid.size())) continue;
+		if (y >= static_cast<int>(grid[0].size())) continue;
+
+		if (grid[x][y] != 'S' && grid[x][y] != 'G')
+			grid[x][y] = '*';
+
+		ShowGrid();
+		Sleep(visualizationPathDelayMs);
+	}
+}
+

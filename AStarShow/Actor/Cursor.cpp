@@ -134,9 +134,11 @@ void Cursor::Tick(float deltaTime)
 			auto grid = level->SnapshotGrid();
 			if (!grid.empty())
 			{
+				aStar.SetVisualization(true, 600, 350);
 				aStar.MakeGrid(grid);  
 				aStar.FindPath();      
 				aStar.Path();
+				aStar.ShowPath();
 			}
 		}
 	}

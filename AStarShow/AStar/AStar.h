@@ -34,13 +34,30 @@ public:
 	void ConstructPath(Node goalNode, Node startNode);
 	void Path();
 
+	// === 탐색 과정 시각화 설정 ===
+	void SetVisualization(bool enabled, int visitDelayMs = 60, int pathDelayMs = 35)
+	{
+		visualizationEnabled = enabled;
+		visualizationVisitDelayMs = visitDelayMs;
+		visualizationPathDelayMs = pathDelayMs;
+	}
+
+	// === 내부 격자를 콘솔로 그리기 ===
+	void ShowGrid();
+
+	// === 최종 경로를 애니메이션으로 그리기 ===
+	void ShowPath();
+
+
 private:
 
 	std::vector<std::vector<char>> grid = { };
 	std::vector<Node> openList;
 	std::vector<Node>closedList;
 	std::vector<Node> path;
-
+	bool visualizationEnabled = false;
+	int  visualizationVisitDelayMs = 60;
+	int  visualizationPathDelayMs = 35;
 
 };
 
